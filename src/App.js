@@ -95,10 +95,69 @@ class History extends Component {
 
   render() {
     const {searchInput, historyList} = this.state
+    if (historyList.length > 0) {
+      const searchResults = historyList.filter(each =>
+        each.title.toLowerCase().includes(searchInput.toLowerCase()),
+      )
 
-    const searchResults = historyList.filter(each =>
-      each.title.toLowerCase().includes(searchInput.toLowerCase()),
-    )
+      if (searchResults.length > 0) {
+        return (
+          <div className="bg">
+            <div className="header-container">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/history-website-logo-img.png"
+                alt="app logo"
+                className="history"
+              />
+              <div className="search-box">
+                <img
+                  src="https://assets.ccbp.in/frontend/react-js/search-img.png"
+                  alt="search"
+                  className="search-logo"
+                />
+              </div>
+              <input
+                type="search"
+                className="search"
+                placeholder="Search History"
+                value={searchInput}
+                onChange={this.onChangeInput}
+              />
+            </div>
+            <CreateBox
+              searchResults={searchResults}
+              onDeleteFun={this.onDeleteFun}
+            />
+          </div>
+        )
+      }
+      return (
+        <div className="bg">
+          <div className="header-container">
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/history-website-logo-img.png"
+              alt="app logo"
+              className="history"
+            />
+            <div className="search-box">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/search-img.png"
+                alt="search"
+                className="search-logo"
+              />
+            </div>
+            <input
+              type="search"
+              className="search"
+              placeholder="Search History"
+              value={searchInput}
+              onChange={this.onChangeInput}
+            />
+          </div>
+          <p className="no">There is no history to show</p>
+        </div>
+      )
+    }
     return (
       <div className="bg">
         <div className="header-container">
@@ -122,10 +181,7 @@ class History extends Component {
             onChange={this.onChangeInput}
           />
         </div>
-        <CreateBox
-          searchResults={searchResults}
-          onDeleteFun={this.onDeleteFun}
-        />
+        <p className="no">There is no history to show</p>
       </div>
     )
   }
@@ -134,7 +190,7 @@ class History extends Component {
 const CreateBox = props => {
   const {searchResults, onDeleteFun} = props
   return (
-    <div className="card">
+    <ul className="card">
       {searchResults.map(each => (
         <CreateHistoryLine
           details={each}
@@ -143,7 +199,7 @@ const CreateBox = props => {
           key={each.id}
         />
       ))}
-    </div>
+    </ul>
   )
 }
 
@@ -158,17 +214,18 @@ const CreateHistoryLine = props => {
       <div className="line-container">
         <div className="history-details">
           <p className="time">{details.timeAccessed}</p>
-          <img src={details.logoUrl} className="logo" alt={details.title} />
+          <img src={details.logoUrl} className="logo" alt="domain logo" />
           <p className="title">{details.title}</p>
           <p className="domain">{details.domainUrl}</p>
         </div>
         <div className="delete-box">
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/delete-img.png"
-            className="delete-logo"
-            alt="delete"
-            onClick={onDelete}
-          />
+          <button className="button" testid="delete" onClick={onDelete}>
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/delete-img.png"
+              className="delete-logo"
+              alt="delete"
+            />
+          </button>
         </div>
       </div>
     </li>

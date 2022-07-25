@@ -81,3 +81,17 @@ body {
 .delete-box {
   margin-right: 20px;
 }
+.no {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #475569;
+  font-weight: 600;
+  height: 100vh;
+}
+.button {
+  background-color: #ffffff;
+  border: none;
+  outline: none;
+}
